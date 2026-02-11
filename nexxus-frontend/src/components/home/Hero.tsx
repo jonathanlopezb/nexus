@@ -1,37 +1,36 @@
-'use client';
-import { useState, useEffect } from 'react';
-
 export default function Hero() {
+    const timeLeft = useCountdown(0, 59, 12);
+
     return (
-        <section className="relative pt-40 pb-20 px-6 md:px-10 overflow-hidden">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <section className="relative pt-32 md:pt-40 pb-20 px-6 md:px-10 overflow-hidden">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
                 {/* Left Content */}
-                <div className="space-y-10 relative z-10">
-                    <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full backdrop-blur-xl">
-                        <span className="w-2 h-2 rounded-full bg-accent"></span>
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">DROPS EXCLUSIVOS DE TEMPORADA</span>
+                <div className="space-y-6 md:space-y-10 relative z-10">
+                    <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-4 md:px-5 py-2 md:py-2.5 rounded-full backdrop-blur-xl">
+                        <span className="w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-accent"></span>
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em]">DROPS EXCLUSIVOS DE TEMPORADA</span>
                     </div>
 
-                    <h2 className="text-7xl md:text-9xl font-black font-space-grotesk tracking-tighter italic leading-[0.85] uppercase">
+                    <h2 className="text-6xl md:text-9xl font-black font-space-grotesk tracking-tighter italic leading-[0.85] uppercase">
                         Vortex<br /><span className="text-accent underline decoration-white/10 underline-offset-8">Quantum</span>
                     </h2>
 
-                    <p className="text-zinc-500 max-w-md font-medium leading-relaxed">
+                    <p className="text-zinc-500 max-w-md font-medium leading-relaxed text-sm md:text-base">
                         La ingeniería del futuro aplicada al calzado urbano. Amortización neural con <b>Aura Core™️</b> para rendimiento infinito.
                     </p>
 
-                    <div className="flex flex-wrap gap-8 items-end">
+                    <div className="flex flex-wrap gap-6 md:gap-8 items-end">
                         <div className="space-y-2">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Neural Price Lock</p>
-                            <div className="flex items-baseline gap-4">
-                                <span className="text-6xl font-black italic">$249.00</span>
-                                <span className="text-xl line-through opacity-20">$450.00</span>
+                            <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">Neural Price Lock</p>
+                            <div className="flex items-baseline gap-3 md:gap-4">
+                                <span className="text-5xl md:text-6xl font-black italic">$249.00</span>
+                                <span className="text-lg md:text-xl line-through opacity-20">$450.00</span>
                             </div>
                         </div>
 
-                        <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl">
-                            <p className="text-[8px] font-black text-accent uppercase tracking-widest mb-2">Reserva de Stock</p>
-                            <div className="text-2xl font-black font-mono tracking-tighter">00:59:12</div>
+                        <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-2xl backdrop-blur-xl">
+                            <p className="text-[7px] md:text-[8px] font-black text-accent uppercase tracking-widest mb-2">Reserva de Stock</p>
+                            <div className="text-xl md:text-2xl font-black font-mono tracking-tighter">{timeLeft}</div>
                         </div>
                     </div>
 

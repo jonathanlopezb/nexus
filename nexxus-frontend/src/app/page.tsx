@@ -11,9 +11,12 @@ import MobileDock from "@/components/layout/MobileDock";
 import Sorenexus from "@/components/shared/Sorenexus";
 import GlobalHypeIndex from "@/components/shared/GlobalHypeIndex";
 
+import Preloader from "@/components/shared/Preloader";
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-transparent text-white selection:bg-accent selection:text-black pb-32">
+    <main className="min-h-screen bg-transparent text-white selection:bg-accent selection:text-black pb-44">
+      <Preloader />
       <ScarcityBanner />
       <PulseFeed />
       <Header />
