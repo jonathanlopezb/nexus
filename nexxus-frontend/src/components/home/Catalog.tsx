@@ -61,30 +61,31 @@ export default function Catalog() {
                             ? Math.round(((product.PrecioOriginal - product.Precio) / product.PrecioOriginal) * 100)
                             : null;
 
+                        // En Strapi 5, los campos están en la raíz del objeto, no en .attributes
                         const imageUrl = product.ImagenAura?.url
                             ? (product.ImagenAura.url.startsWith('http') ? product.ImagenAura.url : `${STRAPI_URL}${product.ImagenAura.url}`)
                             : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop";
 
                         return (
-                            <div key={product.id} className="glass-card p-6 md:p-8 group cursor-pointer relative">
+                            <div key={product.id || product.documentId} className="glass-card p-6 md:p-8 group cursor-pointer relative">
                                 <div className="h-56 md:h-64 flex justify-center items-center">
                                     <img
                                         src={imageUrl}
                                         className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500 object-contain max-h-full"
-                                        alt={product.Nombre}
+                                        alt={product.Nombre || "Sneaker"}
                                     />
                                 </div>
                                 <div className="mt-8 space-y-3">
                                     <div className="flex justify-between items-center text-[10px] font-black tracking-[0.2em] uppercase text-zinc-500">
                                         <span>{product.Marca?.Nombre || 'Nexxus Original'}</span>
-                                        {discount && <span className="text-accent">{discount}% OFF</span>}
+                                        {discount && discount > 0 ? <span className="text-accent">{discount}% OFF</span> : null}
                                     </div>
-                                    <h4 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">{product.Nombre}</h4>
+                                    <h4 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">{product.Nombre || 'Unnamed Drop'}</h4>
                                     <div className="flex flex-col pt-2">
                                         {product.PrecioOriginal && (
-                                            <span className="text-xs md:text-sm line-through opacity-40 font-bold">${product.PrecioOriginal}</span>
+                                            <span className="text-xs md:text-sm line-through opacity-40 font-bold">${product.PrecioOriginal}.00</span>
                                         )}
-                                        <span className="text-3xl md:text-4xl font-black italic">${product.Precio}.00</span>
+                                        <span className="text-3xl md:text-4xl font-black italic">${product.Precio || '0'}.00</span>
                                     </div>
                                     <p className="text-[10px] font-black uppercase text-accent mt-4">Envío Gratis Full</p>
                                 </div>

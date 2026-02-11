@@ -95,15 +95,15 @@ export default function Collections() {
                                 : "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop";
 
                             return (
-                                <div key={product.id} className={`neural-card ${collection.aura} p-6 glass-card group cursor-pointer`}>
+                                <div key={product.id || product.documentId} className={`neural-card ${collection.aura} p-6 glass-card group cursor-pointer`}>
                                     <div className="h-40 flex justify-center items-center">
-                                        <img src={imageUrl} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={product.Nombre} />
+                                        <img src={imageUrl} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={product.Nombre || "Sneaker"} />
                                     </div>
                                     <div className="mt-6 space-y-2">
-                                        <div className={`text-[8px] font-black ${collection.color} tracking-widest`}>MATCH: {product.MatchNeural}%</div>
-                                        <h5 className="text-sm font-black uppercase italic tracking-tighter">{product.Nombre}</h5>
+                                        <div className={`text-[8px] font-black ${collection.color} tracking-widest`}>MATCH: {product.MatchNeural || 0}%</div>
+                                        <h5 className="text-sm font-black uppercase italic tracking-tighter">{product.Nombre || 'Unnamed'}</h5>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-xl font-black">${product.Precio}.00</span>
+                                            <span className="text-xl font-black">${product.Precio || 0}.00</span>
                                             {product.Sale && <span className="text-[9px] font-black text-accent bg-accent/10 px-2 py-0.5 rounded">SALE</span>}
                                             {product.Rare && <span className="text-[9px] font-black text-red-400 bg-red-400/10 px-2 py-0.5 rounded">RARE</span>}
                                         </div>
