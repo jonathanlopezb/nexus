@@ -4,6 +4,7 @@ import { getProducts } from "@/lib/strapi";
 
 interface Product {
     id: number;
+    documentId: string;
     Nombre: string;
     Precio: number;
     MatchNeural: number;
@@ -12,7 +13,11 @@ interface Product {
     ImagenAura: {
         url: string;
     } | null;
-    Marca: {
+    marca: {
+        Nombre: string;
+        AuraColor: string | null;
+    } | null;
+    estilo: {
         Nombre: string;
         AuraColor: string | null;
     } | null;
@@ -42,13 +47,13 @@ export default function Collections() {
     const brandMap: Record<string, { title: string, sub: string, color: string, border: string, aura: string, products: Product[] }> = {};
 
     products.forEach(product => {
-        const brandName = product.Marca?.Nombre || 'NEXXUS';
+        const brandName = product.marca?.Nombre || 'NEXXUS';
         if (!brandMap[brandName]) {
             const isJordan = brandName.toUpperCase() === 'JORDAN';
             brandMap[brandName] = {
                 title: `${brandName.toUpperCase()} // ${isJordan ? 'LEGACY' : 'NEURAL'}`,
                 sub: isJordan ? "Stock de Herencia Élite" : "Diseño optimizado por Sorenexus",
-                color: product.Marca?.AuraColor ? `text-[${product.Marca.AuraColor}]` : (isJordan ? 'text-red-500' : 'text-accent'),
+                color: product.marca?.AuraColor ? `text-[${product.marca.AuraColor}]` : (isJordan ? 'text-red-500' : 'text-accent'),
                 border: isJordan ? 'border-red-500/20' : 'border-accent/20',
                 aura: isJordan ? 'aura-jordan' : 'aura-nike',
                 products: []

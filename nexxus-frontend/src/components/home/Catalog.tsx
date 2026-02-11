@@ -13,7 +13,10 @@ interface Product {
     ImagenAura: {
         url: string;
     } | null;
-    Marca: {
+    marca: {
+        Nombre: string;
+    } | null;
+    estilo: {
         Nombre: string;
     } | null;
 }
@@ -61,13 +64,13 @@ export default function Catalog() {
                             ? Math.round(((product.PrecioOriginal - product.Precio) / product.PrecioOriginal) * 100)
                             : null;
 
-                        // En Strapi 5, los campos están en la raíz del objeto, no en .attributes
+                        // En Strapi 5, los campos están en la raíz del objeto
                         const imageUrl = product.ImagenAura?.url
                             ? (product.ImagenAura.url.startsWith('http') ? product.ImagenAura.url : `${STRAPI_URL}${product.ImagenAura.url}`)
                             : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop";
 
                         return (
-                            <div key={product.id || product.documentId} className="glass-card p-6 md:p-8 group cursor-pointer relative">
+                            <div key={product.documentId} className="glass-card p-6 md:p-8 group cursor-pointer relative">
                                 <div className="h-56 md:h-64 flex justify-center items-center">
                                     <img
                                         src={imageUrl}
@@ -77,7 +80,7 @@ export default function Catalog() {
                                 </div>
                                 <div className="mt-8 space-y-3">
                                     <div className="flex justify-between items-center text-[10px] font-black tracking-[0.2em] uppercase text-zinc-500">
-                                        <span>{product.Marca?.Nombre || 'Nexxus Original'}</span>
+                                        <span>{product.marca?.Nombre || 'Nexxus Original'}</span>
                                         {discount && discount > 0 ? <span className="text-accent">{discount}% OFF</span> : null}
                                     </div>
                                     <h4 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic">{product.Nombre || 'Unnamed Drop'}</h4>
