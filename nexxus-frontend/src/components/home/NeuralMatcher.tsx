@@ -28,12 +28,22 @@ export default function NeuralMatcher({ isEntryMode = false, onClose }: NeuralMa
     };
 
     const containerClasses = isEntryMode
-        ? "fixed inset-0 z-[1100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-6"
-        : "max-w-4xl mx-auto px-6 py-24";
+        ? "fixed inset-0 z-[1100] bg-black/90 backdrop-blur-3xl flex items-center justify-center p-4 md:p-6"
+        : "max-w-4xl mx-auto px-6 py-20";
 
     return (
         <section className={containerClasses}>
-            <div className={`glass-card p-10 md:p-16 border-accent/20 relative overflow-hidden text-center w-full ${isEntryMode ? 'max-w-2xl' : ''}`}>
+            <div className={`glass-card p-6 md:p-10 border-accent/20 relative overflow-hidden text-center w-full transition-all duration-500 ${isEntryMode ? 'max-w-xl md:max-w-3xl' : ''}`}>
+                {/* Close Button for Entry Mode / Results */}
+                {(isEntryMode || step === 6) && (
+                    <button
+                        onClick={onClose}
+                        className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all group"
+                        title="Cerrar"
+                    >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                    </button>
+                )}
                 {/* Background Aura */}
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/5 blur-[100px] rounded-full"></div>
                 <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full"></div>
@@ -174,55 +184,63 @@ export default function NeuralMatcher({ isEntryMode = false, onClose }: NeuralMa
                             <h4 className="text-3xl md:text-4xl font-black italic uppercase font-space-grotesk tracking-tighter leading-none">¡Matches<br /><span className="text-accent underline decoration-white/10">Detectados!</span></h4>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mt-8">
                             {/* Product 1 */}
-                            <div className="bg-white/5 rounded-3xl p-6 border border-white/10 flex flex-col gap-6 text-left group">
-                                <div className="aspect-square relative overflow-hidden bg-zinc-900/50 rounded-2xl flex items-center justify-center">
-                                    <div className="absolute inset-0 bg-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col gap-4 text-left group">
+                                <div className="aspect-[4/3] relative overflow-hidden bg-zinc-900/50 rounded-xl flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-accent/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <img
                                         src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=2000&auto=format&fit=crop"
-                                        className="w-40 h-40 object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] rotate-[-12deg] group-hover:rotate-0 transition-all duration-700"
+                                        className="w-32 h-32 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] rotate-[-8deg] group-hover:rotate-0 transition-all duration-700"
                                         alt="Match 1"
                                     />
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     <div className="space-y-1">
-                                        <p className="text-[8px] font-black uppercase tracking-widest text-accent">98% COMPATIBILIDAD</p>
-                                        <h5 className="text-lg font-black italic leading-none font-space-grotesk uppercase">Vortex Quantum "Zenith"</h5>
+                                        <p className="text-[7px] font-black uppercase tracking-widest text-accent">98% COMPATIBILIDAD</p>
+                                        <h5 className="text-sm font-black italic leading-none font-space-grotesk uppercase">Vortex Quantum "Zenith"</h5>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-xl font-black italic">$249.00</span>
-                                        <button className="bg-white text-black px-6 py-3 rounded-xl font-black uppercase text-[8px] tracking-widest hover:bg-accent transition-all">Comprar</button>
+                                        <span className="text-lg font-black italic">$249.00</span>
+                                        <button className="bg-white text-black px-4 py-2 rounded-lg font-black uppercase text-[7px] tracking-widest hover:bg-accent transition-all">Comprar</button>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Product 2 */}
-                            <div className="bg-white/5 rounded-3xl p-6 border border-white/10 flex flex-col gap-6 text-left group">
-                                <div className="aspect-square relative overflow-hidden bg-zinc-900/50 rounded-2xl flex items-center justify-center">
-                                    <div className="absolute inset-0 bg-blue-500/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col gap-4 text-left group">
+                                <div className="aspect-[4/3] relative overflow-hidden bg-zinc-900/50 rounded-xl flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-blue-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <img
                                         src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=2000&auto=format&fit=crop"
-                                        className="w-40 h-40 object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] rotate-[12deg] group-hover:rotate-0 transition-all duration-700"
+                                        className="w-32 h-32 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] rotate-[8deg] group-hover:rotate-0 transition-all duration-700"
                                         alt="Match 2"
                                     />
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     <div className="space-y-1">
-                                        <p className="text-[8px] font-black uppercase tracking-widest text-blue-400">94% COMPATIBILIDAD</p>
-                                        <h5 className="text-lg font-black italic leading-none font-space-grotesk uppercase">Gravity High 'Electric'</h5>
+                                        <p className="text-[7px] font-black uppercase tracking-widest text-blue-400">94% COMPATIBILIDAD</p>
+                                        <h5 className="text-sm font-black italic leading-none font-space-grotesk uppercase">Gravity High 'Electric'</h5>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-xl font-black italic">$310.00</span>
-                                        <button className="bg-white text-black px-6 py-3 rounded-xl font-black uppercase text-[8px] tracking-widest hover:bg-blue-400 transition-all">Comprar</button>
+                                        <span className="text-lg font-black italic">$310.00</span>
+                                        <button className="bg-white text-black px-4 py-2 rounded-lg font-black uppercase text-[7px] tracking-widest hover:bg-blue-400 transition-all">Comprar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-center gap-4 pt-6">
-                            <button onClick={reset} className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all underline decoration-white/10 underline-offset-4">Reiniciar Algoritmo</button>
-                            {isEntryMode && <button onClick={onClose} className="text-[10px] font-black uppercase tracking-widest text-accent hover:underline transition-all underline-offset-4">Explorar Web Completa</button>}
+                        <div className="flex flex-col items-center gap-6 pt-8">
+                            <button
+                                onClick={onClose}
+                                className="w-full max-w-sm bg-accent text-black py-4 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-white transition-all shadow-[0_10px_30px_rgba(0,255,194,0.2)]"
+                            >
+                                Explorar más de nuestros productos
+                            </button>
+                            <div className="flex justify-center gap-6">
+                                <button onClick={reset} className="text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all underline decoration-white/10 underline-offset-4">Reiniciar Algoritmo</button>
+                                {isEntryMode && <button onClick={onClose} className="text-[9px] font-black uppercase tracking-widest text-accent hover:underline transition-all underline-offset-4">Web Principal</button>}
+                            </div>
                         </div>
                     </div>
                 )}
