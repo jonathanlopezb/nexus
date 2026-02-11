@@ -1,0 +1,33 @@
+{
+    "kind": "collectionType",
+    "collectionName": "estilos",
+    "info": {
+        "singularName": "estilo",
+        "pluralName": "estilos",
+        "displayName": "Estilo",
+        "description": "Categorías de estilo: Casual, Deportivo, Streetwear, etc."
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "Nombre": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "Descripcion": {
+            "type": "text"
+        },
+        "Slug": {
+            "type": "uid",
+            "targetField": "Nombre"
+        },
+        "productos": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::producto.producto",
+            "mappedBy": "estilo"
+        }
+    }
+}

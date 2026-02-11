@@ -63,6 +63,12 @@
             "relation": "manyToOne",
             "target": "api::marca.marca",
             "inversedBy": "productos"
+        },
+        "estilo": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::estilo.estilo",
+            "inversedBy": "productos"
         }
     }
 }

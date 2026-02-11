@@ -20,11 +20,17 @@ export async function fetchStrapi(endpoint: string, options: RequestInit = {}) {
 }
 
 export async function getProducts() {
-    const data = await fetchStrapi('productos?populate=*');
+    // Usamos populate=* para traer primer nivel, pero especificamos relaciones clave
+    const data = await fetchStrapi('productos?populate[marca][populate]=*&populate[estilo][populate]=*&populate[ImagenAura][populate]=*');
     return data?.data || [];
 }
 
 export async function getBrands() {
     const data = await fetchStrapi('marcas?populate=*');
     return data?.data || [];
+}
+
+export async function getHero() {
+    const data = await fetchStrapi('hero?populate=*');
+    return data?.data || null;
 }

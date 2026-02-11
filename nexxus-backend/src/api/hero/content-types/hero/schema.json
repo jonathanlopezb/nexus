@@ -1,0 +1,57 @@
+{
+    "kind": "singleType",
+    "collectionName": "heroes",
+    "info": {
+        "singularName": "hero",
+        "pluralName": "heroes",
+        "displayName": "Hero Section",
+        "description": "Configuración del banner principal de la tienda"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "TitleTop": {
+            "type": "string",
+            "required": true,
+            "default": "NEURAL"
+        },
+        "TitleAccent": {
+            "type": "string",
+            "required": true,
+            "default": "OVERRIDE"
+        },
+        "Description": {
+            "type": "text",
+            "required": true,
+            "description": "Copy de marketing de alto impacto"
+        },
+        "BadgeText": {
+            "type": "string",
+            "default": "DROPS EXCLUSIVOS DE TEMPORADA"
+        },
+        "MainImage": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "Price": {
+            "type": "decimal",
+            "default": 249
+        },
+        "OriginalPrice": {
+            "type": "decimal"
+        },
+        "StockUnits": {
+            "type": "integer",
+            "default": 4
+        },
+        "MatchPercentage": {
+            "type": "integer",
+            "default": 98
+        }
+    }
+}
