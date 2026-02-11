@@ -1,3 +1,4 @@
+'use client';
 import ProductSkeleton from "@/components/ui/ProductSkeleton";
 import { useState, useEffect } from "react";
 

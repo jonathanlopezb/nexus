@@ -1,6 +1,6 @@
 export default function GlobalHypeIndex() {
     return (
-        <div className="fixed left-8 bottom-32 z-[100] group hidden lg:block">
+        <div className="fixed left-8 bottom-24 z-[100] group hidden lg:block">
             <div className="glass-card p-5 border-accent/20 flex items-center space-x-5">
                 <div className="space-y-2">
                     <p className="text-[8px] font-black text-zinc-500 uppercase tracking-[0.2em]">Índice Global de Hype</p>
