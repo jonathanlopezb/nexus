@@ -1,5 +1,24 @@
+interface Shoe {
+    name: string;
+    price: string;
+    match: string;
+    img: string;
+    sale?: boolean;
+    rare?: boolean;
+}
+
+interface Collection {
+    id: string;
+    title: string;
+    sub: string;
+    color: string;
+    aura: string;
+    border: string;
+    shoes: Shoe[];
+}
+
 export default function Collections() {
-    const collections = [
+    const collections: Collection[] = [
         {
             id: "nike", title: "NIKE // NEURAL", sub: "Diseño optimizado por Sorenexus", color: "text-accent", aura: "aura-nike", border: "border-accent/20", shoes: [
                 { name: "Air Max Portal", price: "$199.00", match: "98%", sale: true, img: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop" },
