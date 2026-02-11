@@ -6,20 +6,19 @@ export default function Sorenexus() {
 
     if (!isOpen) return (
         <div
-            className="fixed bottom-6 right-6 md:right-10 z-[200] ai-avatar scale-90 md:scale-100 flex items-center justify-center bg-white text-black rounded-full w-16 h-16 cursor-pointer shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-110 transition-all border-4 border-black group"
+            className="fixed bottom-4 right-6 md:right-10 z-[200] ai-avatar scale-90 md:scale-100 flex items-center justify-center bg-white text-black rounded-full w-16 h-16 cursor-pointer shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-110 transition-all border-4 border-black group"
             onClick={() => setIsOpen(true)}
         >
             <div className="absolute inset-0 rounded-full animate-ping bg-accent/20"></div>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:rotate-12 transition-transform">
-                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
-                <path d="M12 6a6 6 0 0 0-6 6c0 1.66 1 3 3 3s3-1.34 3-3a6 6 0 0 0-6-6zm0 10a4 4 0 1 1 4-4 4 4 0 0 1-4 4z" />
-                <circle cx="12" cy="12" r="2" fill="currentColor" />
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-y-[-2px] transition-transform">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
             </svg>
         </div>
     );
 
     return (
-        <div className="fixed bottom-6 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
+        <div className="fixed bottom-4 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
             <div className="w-[320px] bg-zinc-900/95 backdrop-blur-3xl border border-accent rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,255,194,0.2)]">
                 <div className="bg-gradient-to-r from-accent to-blue-500 p-5 flex justify-between items-center text-black font-black text-sm">
                     <div className="flex items-center gap-3 italic">
