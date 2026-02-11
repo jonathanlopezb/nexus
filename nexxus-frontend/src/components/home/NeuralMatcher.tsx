@@ -28,51 +28,52 @@ export default function NeuralMatcher({ isEntryMode = false, onClose }: NeuralMa
     };
 
     const containerClasses = isEntryMode
-        ? "fixed inset-0 z-[1100] bg-black/90 backdrop-blur-3xl flex items-center justify-center p-4 md:p-6"
+        ? "fixed inset-0 z-[1100] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4"
         : "max-w-4xl mx-auto px-6 py-20";
 
     return (
         <section className={containerClasses}>
-            <div className={`glass-card p-6 md:p-10 border-accent/20 relative overflow-hidden text-center w-full transition-all duration-500 ${isEntryMode ? 'max-w-xl md:max-w-3xl' : ''}`}>
-                {/* Close Button for Entry Mode / Results */}
+            <div className={`glass-card p-6 md:p-8 border-accent/20 relative overflow-hidden text-center w-full transition-all duration-500 max-h-[90vh] overflow-y-auto ${isEntryMode ? 'max-w-xl md:max-w-2xl' : ''}`}>
+
+                {/* Close Button - More prominent and fixed position relative to card */}
                 {(isEntryMode || step === 6) && (
                     <button
                         onClick={onClose}
-                        className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all group"
+                        className="absolute top-4 right-4 z-[60] w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all group backdrop-blur-md"
                         title="Cerrar"
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12" /></svg>
                     </button>
                 )}
+
                 {/* Background Aura */}
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/5 blur-[100px] rounded-full"></div>
-                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full"></div>
 
                 {step === 0 && (
-                    <div className="relative z-10 space-y-8 animate-in fade-in duration-700">
+                    <div className="relative z-10 space-y-6 animate-in fade-in duration-700 pt-4">
                         <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-[10px] font-black tracking-widest text-accent">
                             <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
                             NEXUS NEURAL ENGINE
                         </div>
-                        <h3 className="text-4xl md:text-5xl font-black italic font-space-grotesk leading-none tracking-tighter">
+                        <h3 className="text-3xl md:text-5xl font-black italic font-space-grotesk leading-none tracking-tighter">
                             ¿Listo para encontrar tu <br /><span className="text-accent underline decoration-white/10 underline-offset-8">Identidad Digital</span>?
                         </h3>
                         <p className="text-zinc-500 max-w-lg mx-auto text-xs md:text-sm">
-                            Deja que nuestro algoritmo neural analice tu perfil y te asigne el drop perfecto para tu talle y estilo de vida.
+                            Deja que nuestro algoritmo neural analice tu perfil y te asigne el drop perfecto.
                         </p>
-                        <div className="flex flex-col md:flex-row gap-4 justify-center pt-4">
+                        <div className="flex flex-col md:flex-row gap-3 justify-center pt-2">
                             <button
                                 onClick={() => setStep(1)}
-                                className="bg-white text-black px-12 py-5 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-accent transition-all hover:scale-105"
+                                className="bg-white text-black px-10 py-4 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-accent transition-all"
                             >
                                 Comenzar Escaneo
                             </button>
                             {isEntryMode && (
                                 <button
                                     onClick={onClose}
-                                    className="bg-white/5 border border-white/10 text-white/40 px-8 py-5 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] hover:text-white transition-all"
+                                    className="bg-white/5 border border-white/10 text-white/40 px-8 py-4 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] hover:text-white transition-all"
                                 >
-                                    Explorar Catálogo
+                                    Saltar
                                 </button>
                             )}
                         </div>
@@ -80,166 +81,104 @@ export default function NeuralMatcher({ isEntryMode = false, onClose }: NeuralMa
                 )}
 
                 {step === 1 && (
-                    <div className="relative z-10 space-y-10 animate-in slide-in-from-right duration-500">
-                        <div className="space-y-2">
-                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase tracking-tighter">Paso 01/04</p>
-                            <h4 className="text-2xl md:text-3xl font-black italic uppercase font-space-grotesk tracking-tighter">Estilo Dominante</h4>
+                    <div className="relative z-10 space-y-8 animate-in slide-in-from-right duration-500">
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase">Paso 01/04</p>
+                            <h4 className="text-2xl font-black italic uppercase font-space-grotesk">Estilo</h4>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
                             {styles.map(s => (
-                                <button
-                                    key={s}
-                                    onClick={() => { setSelections({ ...selections, style: s }); setStep(2); }}
-                                    className="p-5 rounded-2xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic"
-                                >
-                                    {s}
-                                </button>
+                                <button key={s} onClick={() => { setSelections({ ...selections, style: s }); setStep(2); }} className="p-4 rounded-xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic">{s}</button>
                             ))}
                         </div>
                     </div>
                 )}
 
                 {step === 2 && (
-                    <div className="relative z-10 space-y-10 animate-in slide-in-from-right duration-500">
-                        <div className="space-y-2">
-                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase tracking-tighter">Paso 02/04</p>
-                            <h4 className="text-2xl md:text-3xl font-black italic uppercase font-space-grotesk tracking-tighter">¿Cómo es tu Outfit?</h4>
+                    <div className="relative z-10 space-y-8 animate-in slide-in-from-right duration-500">
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase">Paso 02/04</p>
+                            <h4 className="text-2xl font-black italic uppercase font-space-grotesk">Perfil Outfit</h4>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
                             {fits.map(f => (
-                                <button
-                                    key={f}
-                                    onClick={() => { setSelections({ ...selections, fit: f }); setStep(3); }}
-                                    className="p-5 rounded-2xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic"
-                                >
-                                    {f}
-                                </button>
+                                <button key={f} onClick={() => { setSelections({ ...selections, fit: f }); setStep(3); }} className="p-4 rounded-xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic">{f}</button>
                             ))}
                         </div>
                     </div>
                 )}
 
                 {step === 3 && (
-                    <div className="relative z-10 space-y-10 animate-in slide-in-from-right duration-500">
-                        <div className="space-y-2">
-                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase tracking-tighter">Paso 03/04</p>
-                            <h4 className="text-2xl md:text-3xl font-black italic uppercase font-space-grotesk tracking-tighter">¿Para qué los Usarás?</h4>
+                    <div className="relative z-10 space-y-8 animate-in slide-in-from-right duration-500">
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase">Paso 03/04</p>
+                            <h4 className="text-2xl font-black italic uppercase font-space-grotesk">Uso</h4>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
                             {occasions.map(o => (
-                                <button
-                                    key={o}
-                                    onClick={() => { setSelections({ ...selections, occasion: o }); setStep(4); }}
-                                    className="p-5 rounded-2xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic"
-                                >
-                                    {o}
-                                </button>
+                                <button key={o} onClick={() => { setSelections({ ...selections, occasion: o }); setStep(4); }} className="p-4 rounded-xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all text-[10px] font-black tracking-widest uppercase italic">{o}</button>
                             ))}
                         </div>
                     </div>
                 )}
 
                 {step === 4 && (
-                    <div className="relative z-10 space-y-10 animate-in slide-in-from-right duration-500">
-                        <div className="space-y-2">
-                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase tracking-tighter">Paso 04/04</p>
-                            <h4 className="text-2xl md:text-3xl font-black italic uppercase font-space-grotesk tracking-tighter">Talla Us habitual</h4>
+                    <div className="relative z-10 space-y-8 animate-in slide-in-from-right duration-500">
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-accent tracking-[0.4em] uppercase">Paso 04/04</p>
+                            <h4 className="text-2xl font-black italic uppercase font-space-grotesk">Talla US</h4>
                         </div>
                         <div className="flex flex-wrap justify-center gap-2 max-w-md mx-auto">
                             {sizes.map(s => (
-                                <button
-                                    key={s}
-                                    onClick={() => { setSelections({ ...selections, size: s }); setStep(5); }}
-                                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all flex items-center justify-center font-black italic text-xs"
-                                >
-                                    {s}
-                                </button>
+                                <button key={s} onClick={() => { setSelections({ ...selections, size: s }); setStep(5); }} className="w-14 h-14 rounded-xl border border-white/5 bg-white/5 hover:border-accent hover:bg-accent/5 transition-all flex items-center justify-center font-black italic text-[10px]">{s}</button>
                             ))}
                         </div>
                     </div>
                 )}
 
                 {step === 5 && (
-                    <div className="relative z-10 py-10 flex flex-col items-center gap-8">
-                        <div className="relative w-32 h-32">
+                    <div className="relative z-10 py-10 flex flex-col items-center gap-6">
+                        <div className="relative w-24 h-24">
                             <div className="absolute inset-0 border-4 border-accent/10 rounded-full"></div>
-                            <div className="absolute inset-0 border-4 border-t-accent rounded-full animate-spin shadow-[0_0_30px_rgba(0,255,194,0.4)]"></div>
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-space-grotesk font-black text-accent animate-pulse tracking-tighter">MATRIX</span>
-                            </div>
+                            <div className="absolute inset-0 border-4 border-t-accent rounded-full animate-spin"></div>
+                            <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black text-accent animate-pulse">DNA</div>
                         </div>
-                        <div className="space-y-3">
-                            <h4 className="text-2xl font-black italic uppercase font-space-grotesk animate-pulse">Calculando Match Dual...</h4>
-                            <p className="text-[10px] font-black text-zinc-600 tracking-[0.5em] uppercase">Sincronizando {selections.style} + {selections.fit}</p>
-                        </div>
+                        <h4 className="text-xl font-black italic uppercase animate-pulse">Sincronizando...</h4>
                     </div>
                 )}
 
                 {step === 6 && (
-                    <div className="relative z-10 space-y-10 animate-in zoom-in duration-700">
-                        <div className="space-y-4">
-                            <div className="w-16 h-16 bg-accent rounded-full mx-auto flex items-center justify-center shadow-[0_0_50px_rgba(0,255,194,0.3)]">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
+                    <div className="relative z-10 space-y-4 animate-in zoom-in duration-700 pt-6">
+                        <div className="space-y-1">
+                            <div className="w-10 h-10 bg-accent rounded-full mx-auto flex items-center justify-center shadow-[0_0_20px_rgba(0,255,194,0.3)]">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
                             </div>
-                            <h4 className="text-3xl md:text-4xl font-black italic uppercase font-space-grotesk tracking-tighter leading-none">¡Matches<br /><span className="text-accent underline decoration-white/10">Detectados!</span></h4>
+                            <h4 className="text-xl md:text-2xl font-black italic uppercase font-space-grotesk tracking-tighter leading-none">¡Match Detectado!</h4>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mt-8">
-                            {/* Product 1 */}
-                            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col gap-4 text-left group">
-                                <div className="aspect-[4/3] relative overflow-hidden bg-zinc-900/50 rounded-xl flex items-center justify-center">
-                                    <div className="absolute inset-0 bg-accent/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <img
-                                        src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=2000&auto=format&fit=crop"
-                                        className="w-32 h-32 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] rotate-[-8deg] group-hover:rotate-0 transition-all duration-700"
-                                        alt="Match 1"
-                                    />
-                                </div>
-                                <div className="space-y-3">
-                                    <div className="space-y-1">
-                                        <p className="text-[7px] font-black uppercase tracking-widest text-accent">98% COMPATIBILIDAD</p>
-                                        <h5 className="text-sm font-black italic leading-none font-space-grotesk uppercase">Vortex Quantum "Zenith"</h5>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-lg font-black italic">$249.00</span>
-                                        <button className="bg-white text-black px-4 py-2 rounded-lg font-black uppercase text-[7px] tracking-widest hover:bg-accent transition-all">Comprar</button>
-                                    </div>
-                                </div>
+                        <div className="bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col md:flex-row items-center gap-4 text-left max-w-lg mx-auto overflow-hidden">
+                            <div className="w-24 h-24 md:w-32 md:h-32 relative shrink-0 flex items-center justify-center bg-zinc-950 rounded-xl">
+                                <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=2000&auto=format&fit=crop" className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-xl rotate-[-12deg]" alt="Match" />
                             </div>
-
-                            {/* Product 2 */}
-                            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col gap-4 text-left group">
-                                <div className="aspect-[4/3] relative overflow-hidden bg-zinc-900/50 rounded-xl flex items-center justify-center">
-                                    <div className="absolute inset-0 bg-blue-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <img
-                                        src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=2000&auto=format&fit=crop"
-                                        className="w-32 h-32 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] rotate-[8deg] group-hover:rotate-0 transition-all duration-700"
-                                        alt="Match 2"
-                                    />
+                            <div className="space-y-3 flex-1 overflow-hidden">
+                                <div>
+                                    <p className="text-[6px] font-black text-accent tracking-widest uppercase">RECOMENDACIÓN NEURAL</p>
+                                    <h5 className="text-base font-black italic font-space-grotesk uppercase truncate">Vortex Quantum "Zenith"</h5>
+                                    <p className="text-[8px] text-zinc-500 font-bold uppercase truncate">{selections.style} • {selections.fit} • {selections.size}</p>
                                 </div>
-                                <div className="space-y-3">
-                                    <div className="space-y-1">
-                                        <p className="text-[7px] font-black uppercase tracking-widest text-blue-400">94% COMPATIBILIDAD</p>
-                                        <h5 className="text-sm font-black italic leading-none font-space-grotesk uppercase">Gravity High 'Electric'</h5>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-lg font-black italic">$310.00</span>
-                                        <button className="bg-white text-black px-4 py-2 rounded-lg font-black uppercase text-[7px] tracking-widest hover:bg-blue-400 transition-all">Comprar</button>
-                                    </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xl font-black italic">$249.00</span>
+                                    <span className="text-[8px] bg-accent/20 text-accent px-1.5 py-0.5 rounded font-black">-45%</span>
                                 </div>
+                                <button className="w-full bg-white text-black py-2 rounded-lg font-black uppercase text-[8px] tracking-widest hover:bg-accent transition-all">Comprar Ahora</button>
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-center gap-6 pt-8">
-                            <button
-                                onClick={onClose}
-                                className="w-full max-w-sm bg-accent text-black py-4 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-white transition-all shadow-[0_10px_30px_rgba(0,255,194,0.2)]"
-                            >
-                                Explorar más de nuestros productos
-                            </button>
-                            <div className="flex justify-center gap-6">
-                                <button onClick={reset} className="text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all underline decoration-white/10 underline-offset-4">Reiniciar Algoritmo</button>
-                                {isEntryMode && <button onClick={onClose} className="text-[9px] font-black uppercase tracking-widest text-accent hover:underline transition-all underline-offset-4">Web Principal</button>}
+                        <div className="flex flex-col items-center gap-3 pt-2">
+                            <button onClick={onClose} className="w-full max-w-xs bg-accent text-black py-3 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg">Explorar Catálogo</button>
+                            <div className="flex justify-center gap-4">
+                                <button onClick={reset} className="text-[7px] font-black uppercase text-white/30 underline underline-offset-4">Re-Escanear</button>
+                                {isEntryMode && <button onClick={onClose} className="text-[7px] font-black uppercase text-accent/60">Cerrar</button>}
                             </div>
                         </div>
                     </div>
