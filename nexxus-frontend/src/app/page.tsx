@@ -1,6 +1,7 @@
 import ScarcityBanner from "@/components/home/ScarcityBanner";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/home/Hero";
+import NeuralMatcher from "@/components/home/NeuralMatcher";
 import Catalog from "@/components/home/Catalog";
 import BrandUniverse from "@/components/home/BrandUniverse";
 import Collections from "@/components/home/Collections";
@@ -20,6 +21,7 @@ export default function Home() {
       <Header />
 
       <Hero />
+      <NeuralMatcher />
       <Catalog />
       <BrandUniverse />
       <Collections />
