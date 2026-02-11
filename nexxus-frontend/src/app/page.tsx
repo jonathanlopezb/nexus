@@ -2,6 +2,7 @@ import ScarcityBanner from "@/components/home/ScarcityBanner";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/home/Hero";
 import NeuralMatcher from "@/components/home/NeuralMatcher";
+import OnboardingDiscovery from "@/components/home/OnboardingDiscovery";
 import Catalog from "@/components/home/Catalog";
 import BrandUniverse from "@/components/home/BrandUniverse";
 import Collections from "@/components/home/Collections";
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-transparent text-white selection:bg-accent selection:text-black pb-44">
       <Preloader />
+      <OnboardingDiscovery />
       <ScarcityBanner />
       <Header />
 
