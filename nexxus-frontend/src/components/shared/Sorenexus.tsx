@@ -5,13 +5,13 @@ export default function Sorenexus() {
     const [isOpen, setIsOpen] = useState(true);
 
     if (!isOpen) return (
-        <div className="fixed bottom-24 right-10 z-[200] ai-avatar scale-75 md:scale-100 flex items-center justify-center bg-accent text-black rounded-full w-14 h-14 cursor-pointer shadow-2xl" onClick={() => setIsOpen(true)}>
+        <div className="fixed bottom-14 right-10 z-[200] ai-avatar scale-75 md:scale-100 flex items-center justify-center bg-accent text-black rounded-full w-14 h-14 cursor-pointer shadow-2xl" onClick={() => setIsOpen(true)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3"><circle cx="12" cy="12" r="10" /><path d="M12 2v20M2 12h20" /></svg>
         </div>
     );
 
     return (
-        <div className="fixed bottom-24 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
+        <div className="fixed bottom-14 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
             <div className="w-[320px] bg-zinc-900/95 backdrop-blur-3xl border border-accent rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,255,194,0.2)]">
                 <div className="bg-gradient-to-r from-accent to-blue-500 p-5 flex justify-between items-center text-black font-black text-sm">
                     <div className="flex items-center gap-3 italic">

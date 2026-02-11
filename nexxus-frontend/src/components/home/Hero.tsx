@@ -1,3 +1,6 @@
+'use client';
+import { useCountdown } from "@/hooks/useCountdown";
+
 export default function Hero() {
     const timeLeft = useCountdown(0, 59, 12);
 
