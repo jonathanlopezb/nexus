@@ -1,0 +1,68 @@
+{
+    "kind": "collectionType",
+    "collectionName": "productos",
+    "info": {
+        "singularName": "producto",
+        "pluralName": "productos",
+        "displayName": "Producto",
+        "description": "Sneakers y calzado del multiverso Nexxus"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "Nombre": {
+            "type": "string",
+            "required": true
+        },
+        "Descripcion": {
+            "type": "richtext"
+        },
+        "Precio": {
+            "type": "decimal",
+            "required": true
+        },
+        "PrecioOriginal": {
+            "type": "decimal",
+            "description": "Precio antes del descuento para mostrar el tachado"
+        },
+        "MatchNeural": {
+            "type": "integer",
+            "min": 0,
+            "max": 100,
+            "default": 85
+        },
+        "ImagenAura": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "HypeLevel": {
+            "type": "integer",
+            "min": 1,
+            "max": 10,
+            "default": 5
+        },
+        "Stock": {
+            "type": "integer",
+            "default": 10
+        },
+        "Sale": {
+            "type": "boolean",
+            "default": false
+        },
+        "Rare": {
+            "type": "boolean",
+            "default": false
+        },
+        "marca": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::marca.marca",
+            "inversedBy": "productos"
+        }
+    }
+}

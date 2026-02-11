@@ -1,0 +1,42 @@
+{
+    "kind": "collectionType",
+    "collectionName": "marcas",
+    "info": {
+        "singularName": "marca",
+        "pluralName": "marcas",
+        "displayName": "Marca",
+        "description": "Marcas oficiales del universo Nexxus"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "Nombre": {
+            "type": "string",
+            "unique": true,
+            "required": true
+        },
+        "Logo": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "AuraColor": {
+            "type": "string",
+            "description": "Código Hex para el tema visual de la marca"
+        },
+        "Slug": {
+            "type": "uid",
+            "targetField": "Nombre"
+        },
+        "productos": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::producto.producto",
+            "mappedBy": "marca"
+        }
+    }
+}
