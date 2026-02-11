@@ -1,5 +1,4 @@
 import ScarcityBanner from "@/components/home/ScarcityBanner";
-import PulseFeed from "@/components/home/PulseFeed";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/home/Hero";
 import Catalog from "@/components/home/Catalog";
@@ -18,7 +17,6 @@ export default function Home() {
     <main className="min-h-screen bg-transparent text-white selection:bg-accent selection:text-black pb-44">
       <Preloader />
       <ScarcityBanner />
-      <PulseFeed />
       <Header />
 
       <Hero />

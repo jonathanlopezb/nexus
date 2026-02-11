@@ -24,9 +24,10 @@ export default function Header() {
             <header className={`fixed top-0 left-0 w-full z-[150] transition-all duration-500 ${isScrolled ? 'py-4 bg-black/80 backdrop-blur-xl border-b border-white/5' : 'py-8 bg-transparent'}`}>
                 <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
                     {/* Logo */}
-                    <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <div className="w-8 h-8 md:w-10 md:h-10 bg-white text-black flex items-center justify-center font-black italic scale-110 group-hover:bg-accent transition-colors">N</div>
-                        <span className="font-space-grotesk text-xl md:text-2xl font-black tracking-tighter italic">NEXXUS 2.0</span>
+                    <div className="flex items-center group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                        <span className="font-space-grotesk text-2xl md:text-3xl font-black tracking-tighter italic uppercase">
+                            NEXUS<span className="text-accent ml-1">.</span>
+                        </span>
                     </div>
 
                     {/* Neural Search */}
