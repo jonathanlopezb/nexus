@@ -15,6 +15,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Nexxus 2.0 | La tienda del futuro impulsada por IA",
   description: "Descubre la nueva era del e-commerce urbano con Nexxus 2.0.",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
