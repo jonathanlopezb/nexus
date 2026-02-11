@@ -1,0 +1,69 @@
+'use client';
+import { useState, useEffect } from 'react';
+
+export default function Hero() {
+    return (
+        <section className="relative pt-40 pb-20 px-6 md:px-10 overflow-hidden">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                {/* Left Content */}
+                <div className="space-y-10 relative z-10">
+                    <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full backdrop-blur-xl">
+                        <span className="w-2 h-2 rounded-full bg-accent"></span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">DROPS EXCLUSIVOS DE TEMPORADA</span>
+                    </div>
+
+                    <h2 className="text-7xl md:text-9xl font-black font-space-grotesk tracking-tighter italic leading-[0.85] uppercase">
+                        Vortex<br /><span className="text-accent underline decoration-white/10 underline-offset-8">Quantum</span>
+                    </h2>
+
+                    <p className="text-zinc-500 max-w-md font-medium leading-relaxed">
+                        La ingeniería del futuro aplicada al calzado urbano. Amortización neural con <b>Aura Core™️</b> para rendimiento infinito.
+                    </p>
+
+                    <div className="flex flex-wrap gap-8 items-end">
+                        <div className="space-y-2">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Neural Price Lock</p>
+                            <div className="flex items-baseline gap-4">
+                                <span className="text-6xl font-black italic">$249.00</span>
+                                <span className="text-xl line-through opacity-20">$450.00</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-xl">
+                            <p className="text-[8px] font-black text-accent uppercase tracking-widest mb-2">Reserva de Stock</p>
+                            <div className="text-2xl font-black font-mono tracking-tighter">00:59:12</div>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-4">
+                        <button className="bg-white text-black px-12 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-accent transition-all hover:scale-105">Comprar Ahora</button>
+                        <button className="bg-white/5 border border-white/10 text-white px-8 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:border-accent transition-all">Ver Detalles</button>
+                    </div>
+                </div>
+
+                {/* Right Content: Product Visualizer */}
+                <div className="relative group">
+                    <div className="absolute -inset-20 bg-accent/20 blur-[120px] rounded-full group-hover:bg-accent/30 transition-all"></div>
+                    <div className="relative glass-card border-none bg-transparent group-hover:scale-105 transition-transform duration-700">
+                        <img
+                            src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=2000&auto=format&fit=crop"
+                            className="w-full h-auto drop-shadow-[0_50px_100px_rgba(0,0,0,0.5)] rotate-[-12deg] group-hover:rotate-0 transition-all duration-700"
+                            alt="Vortex Quantum"
+                        />
+                    </div>
+
+                    {/* Floating Specs */}
+                    <div className="absolute -top-10 -right-10 glass-card p-6 rotate-6 group-hover:rotate-0 transition-all">
+                        <span className="text-[8px] font-black uppercase block mb-1 text-zinc-500">Match Compatible</span>
+                        <span className="text-2xl font-black italic text-accent">98%</span>
+                    </div>
+
+                    <div className="absolute -bottom-10 -left-10 glass-card p-6 -rotate-6 group-hover:rotate-0 transition-all">
+                        <span className="text-[8px] font-black uppercase block mb-1 text-zinc-500">Unidades Disponibles</span>
+                        <span className="text-2xl font-black italic">04</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

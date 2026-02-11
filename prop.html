@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexxus 2.0 | La tienda del futuro impulsada por IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Space+Grotesk:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020202;
+            --accent: #00FFC2;
+            --accent-glow: rgba(0, 255, 194, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-radius: 28px;
+            --ml-blue: #00A3FF;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #f2f2f2;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Conversion Bar (Inspired by ML Search) */
+        .search-container {
+            position: sticky;
+            top: 20px;
+            z-index: 50;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .search-bar {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* High-Conversion Badges */
+        .badge-ribbon {
+            background: linear-gradient(90deg, #00FFC211, transparent);
+            border-left: 3px solid var(--accent);
+            padding: 4px 12px;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        /* Price Tags */
+        .price-old {
+            text-decoration: line-through;
+            opacity: 0.4;
+            font-size: 0.8em;
+        }
+
+        .discount-pill {
+            background: rgba(0, 255, 194, 0.1);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.7em;
+        }
+
+        /* Scarcity Banner */
+        .scarcity-banner {
+            background: linear-gradient(90deg, #FF1E1E, #8C0000);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        /* Noise & Aura Base */
+        .noise-overlay::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.12;
+            z-index: 60;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .aura {
+            position: fixed;
+            width: 100vw;
+            height: 100vw;
+            background: radial-gradient(circle, rgba(0, 255, 194, 0.03) 0%, transparent 70%);
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* AI Assistant Interface */
+        .ai-assistant-container {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .ai-chat-window {
+            width: 320px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--accent);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 255, 194, 0.2);
+            margin-bottom: 20px;
+            pointer-events: auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s forwards 0.5s;
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(90deg, var(--accent), #0077FF);
+            padding: 16px 20px;
+            color: black;
+            font-weight: 900;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-body {
+            padding: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg {
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 12px;
+            line-height: 1.4;
+            max-width: 85%;
+        }
+
+        .msg-ai {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        .msg-user {
+            background: var(--accent);
+            color: black;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+            font-weight: 600;
+        }
+
+        .ai-chat-footer {
+            padding: 12px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: white;
+            flex: 1;
+            outline: none;
+        }
+
+        .ai-send {
+            background: var(--accent);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .ai-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #0077FF);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px var(--accent-glow);
+            cursor: pointer;
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .ai-avatar::after {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* Updated AI Dock Styling */
+        .ai-dock {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 70px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding: 0 10px;
+        }
+
+        .ai-core-btn {
+            width: 54px;
+            height: 54px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px var(--accent-glow);
+            margin-top: -40px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .ai-core-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        /* Tightened Spacing */
+        .section-gap {
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        /* Innovation: Neural Price Lock UI */
+        .price-lock-card {
+            background: linear-gradient(135deg, rgba(0, 255, 194, 0.1), rgba(0, 119, 255, 0.05));
+            border: 2px dashed var(--accent);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .lock-timer {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 900;
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        /* Innovation: Pulse Feed */
+        .pulse-feed {
+            height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .pulse-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 50px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Compact Hero Styles */
+        .hero-compact {
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .hero-title-subtle {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            line-height: 1;
+        }
+
+        /* Typography Accents */
+        .outline-text {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            color: transparent;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, #666);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Animation */
+        @keyframes floatDeep {
+
+            0%,
+            100% {
+                transform: translateZ(0) translateY(0) rotate(-15deg);
+            }
+
+            50% {
+                transform: translateZ(50px) translateY(-30px) rotate(-10deg);
+            }
+        }
+
+        .float-deep {
+            animation: floatDeep 8s infinite ease-in-out;
+        }
+
+        /* Neural Card Interactivity */
+        .neural-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .neural-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        .aura-nike:hover {
+            border-color: #00FFC2;
+            box-shadow: 0 0 30px rgba(0, 255, 194, 0.15);
+        }
+
+        .aura-jordan:hover {
+            border-color: #FF003C;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.15);
+        }
+
+        .aura-adidas:hover {
+            border-color: #0077FF;
+            box-shadow: 0 0 30px rgba(0, 119, 255, 0.15);
+        }
+
+        .hype-token {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .neural-match {
+            font-size: 7px;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+
+<body class="noise-overlay">
+    <div class="aura"></div>
+
+    <!-- Top Urgency Bar -->
+    <div class="scarcity-banner">
+        OFERTAS QUANTUM: 50% OFF HASTA MEDIANOCHE • 08:45:12 RESTANTES
+    </div>
+
+    <!-- Innovation: Live Pulse Feed -->
+    <div class="pulse-feed">
+        <div class="flex animate-marquee">
+            <div class="pulse-item"><span class="pulse-dot"></span>Usuario @Kev_09 acaba de comprar Vortex Quantum</div>
+            <div class="pulse-item"><span class="pulse-dot"></span>Sorenexus recomendó Jordan Retro a @Laura_V</div>
+            <div class="pulse-item"><span class="pulse-dot"></span>34 personas viendo este talle ahora</div>
+            <div class="pulse-item"><span class="pulse-dot" style="background: #0077FF;"></span>Talle 10 reservado por 2
+                minutos</div>
+            <div class="pulse-item"><span class="pulse-dot"></span>Usuario @Marti_X activó Neural Price Lock</div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+
+    <!-- Header & Search -->
+    <header
+        class="max-w-7xl mx-auto px-10 py-8 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 relative z-20">
+        <div class="text-3xl font-black tracking-tighter uppercase italic">NEXXUS<span class="text-emerald-400">.</span>
+        </div>
+        <div class="flex-1 w-full max-w-2xl md:mx-12">
+            <div class="search-bar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                </svg>
+                <input type="text" placeholder="Busca en el futuro... (Nike, Adidas, Drops)"
+                    class="w-full bg-transparent border-none outline-none px-4 text-sm font-semibold">
+            </div>
+        </div>
+        <div class="flex items-center space-x-6 text-[10px] uppercase font-bold tracking-widest opacity-60">
+            <a href="#" class="hover:text-emerald-400">Mis Compras</a>
+            <div class="w-10 h-10 glass-card flex items-center justify-center border-none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                    <path d="M3 6h18" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trust Mechanics Ribbon -->
+    <div class="max-w-7xl mx-auto px-10 py-6 grid grid-cols-2 md:grid-cols-4 gap-4 opacity-80">
+        <div class="flex items-center space-x-3 text-[10px] font-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+            </svg>
+            <span class="uppercase">Compra Protegida</span>
+        </div>
+        <div class="flex items-center space-x-3 text-[10px] font-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)">
+                <path d="M11 2a10 10 0 0 1 10 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9A10 10 0 0 1 13 2Z" />
+            </svg>
+            <span class="uppercase">Envío Gratis Neural</span>
+        </div>
+        <div class="flex items-center space-x-3 text-[10px] font-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+            <span class="uppercase">Paga en Cuotas Addi</span>
+        </div>
+        <div class="flex items-center space-x-3 text-[10px] font-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)">
+                <circle cx="12" cy="12" r="10" />
+                <path d="m16 10-4 4-2-2" />
+            </svg>
+            <span class="uppercase">Garantía Nexxus</span>
+        </div>
+    </div>
+
+    <main class="relative">
+        <!-- HERO PHASE: Ultra-Compact & Dense -->
+        <section
+            class="max-w-7xl mx-auto px-10 hero-compact grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-white/5">
+            <div class="space-y-6">
+                <div class="price-lock-card">
+                    <div>
+                        <p class="text-[9px] font-black text-emerald-400 uppercase tracking-widest">Neural Price Lock
+                            Activado</p>
+                        <p class="text-xs font-bold text-zinc-400">Sorenexus mantuvo este precio para ti</p>
+                    </div>
+                    <div class="lock-timer">00:59</div>
+                </div>
+
+                <h2 class="font-heading hero-title-subtle font-black tracking-tighter uppercase">
+                    VORTEX<br />
+                    <span class="gradient-text italic">QUANTUM</span>
+                </h2>
+
+                <div class="flex items-center space-x-6">
+                    <div class="flex flex-col">
+                        <span class="price-old text-xl">$450.00</span>
+                        <div class="text-6xl font-black tracking-tighter">$299.00</div>
+                    </div>
+                    <div class="text-center">
+                        <span
+                            class="block px-3 py-1 bg-emerald-500 text-black text-[10px] font-black rounded-full mb-1">MÁS
+                            VENDIDO</span>
+                        <span class="text-emerald-400 text-xl font-black">34% OFF</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <button
+                        class="flex-1 px-8 py-5 bg-white text-black font-black text-lg rounded-full hover:bg-emerald-400 transition-all shadow-[0_15px_40px_rgba(0,255,194,0.3)]">
+                        COMPRAR AHORA
+                    </button>
+                    <div
+                        class="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center cursor-pointer hover:bg-white/5">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.54 4.05 3 5.5l7 7Z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex justify-center items-center">
+                <div class="absolute w-[70%] h-[70%] bg-emerald-500/10 blur-[90px] rounded-full"></div>
+                <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070&auto=format&fit=crop"
+                    class="w-full h-auto object-contain z-10 -rotate-12 float-deep scale-110" alt="">
+
+                <div class="absolute bottom-4 right-0 glass-card p-4 border-emerald-500/20 text-center scale-90">
+                    <p class="text-[9px] font-black text-emerald-400 uppercase">Neural Fit</p>
+                    <p class="text-lg font-black tracking-tighter">HEAT SENSING</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Catalog Suggestions (Tighter) -->
+        <section class="max-w-7xl mx-auto px-10 py-10 overflow-hidden">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <p class="text-emerald-400 font-black tracking-[0.3em] uppercase text-[9px] mb-2">Recomendaciones
+                        Neurales</p>
+                    <h3 class="font-heading text-4xl font-black tracking-tighter italic">ESTILO PARA TI</h3>
+                </div>
+                <a href="#"
+                    class="text-xs font-bold border-b border-zinc-700 pb-2 hover:border-white transition-all uppercase">Ver
+                    Catálogo</a>
+            </div>
+
+            <div class="flex space-x-10 overflow-x-auto pb-10">
+                <!-- Card 1 -->
+                <div class="flex-none w-[320px] glass-card p-8 group cursor-pointer">
+                    <div class="h-64 flex justify-center items-center relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop"
+                            class="w-full h-auto transform group-hover:scale-110 transition-transform" alt="">
+                    </div>
+                    <div class="mt-8 space-y-2">
+                        <div
+                            class="flex justify-between items-center text-[10px] font-black tracking-widest uppercase text-zinc-500">
+                            <span>Nike Alpha</span>
+                            <span class="text-emerald-400">34% OFF</span>
+                        </div>
+                        <h4 class="text-2xl font-black uppercase">React Infinity</h4>
+                        <div class="flex flex-col pt-4">
+                            <span class="price-old">$250</span>
+                            <span class="text-3xl font-black italic">$189</span>
+                        </div>
+                        <p class="text-[9px] font-black uppercase text-emerald-400 mt-2">Envío Gratis Full</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flex-none w-[320px] glass-card p-8 group cursor-pointer border-blue-500/20">
+                    <div class="h-64 flex justify-center items-center relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=2070&auto=format&fit=crop"
+                            class="w-full h-auto transform group-hover:scale-110 transition-transform" alt="">
+                    </div>
+                    <div class="mt-8 space-y-2">
+                        <div
+                            class="flex justify-between items-center text-[10px] font-black tracking-widest uppercase text-zinc-500">
+                            <span>Adidas Pro</span>
+                            <span class="text-emerald-400">Llega Mañana</span>
+                        </div>
+                        <h4 class="text-2xl font-black uppercase">Ultraboost X</h4>
+                        <div class="text-3xl font-black italic pt-4">$210</div>
+                        <p class="text-[9px] font-black uppercase text-blue-400 mt-2">Mismo día en Nexxus Fleet</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flex-none w-[320px] glass-card p-8 group cursor-pointer">
+                    <div class="h-64 flex justify-center items-center relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=2070&auto=format&fit=crop"
+                            class="w-full h-auto transform group-hover:scale-110 transition-transform" alt="">
+                    </div>
+                    <div class="mt-8 space-y-2">
+                        <div
+                            class="flex justify-between items-center text-[10px] font-black tracking-widest uppercase text-zinc-500">
+                            <span>Jordan Legacy</span>
+                            <span class="text-red-500">REBAJA</span>
+                        </div>
+                        <h4 class="text-2xl font-black uppercase">Air Jordan 1 Low</h4>
+                        <div class="flex flex-col pt-4">
+                            <span class="price-old text-zinc-600">$450</span>
+                            <span class="text-3xl font-black italic">$320</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Brand Warp (Logo Wall - Compact) -->
+        <section class="max-w-7xl mx-auto px-10 py-12">
+            <div class="flex flex-col items-center mb-10 text-center">
+                <p class="text-emerald-400 font-black tracking-[0.4em] uppercase text-[9px] mb-2">Socios Oficiales</p>
+                <h3 class="font-heading text-3xl font-black tracking-tighter italic">EL UNIVERSO DE MARCAS</h3>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-emerald-500/50 transition-all cursor-pointer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"
+                        class="w-full invert opacity-40 group-hover:opacity-100 transition-opacity" alt="Nike">
+                </div>
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-blue-500/50 transition-all cursor-pointer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg"
+                        class="w-full invert opacity-40 group-hover:opacity-100 transition-opacity" alt="Adidas">
+                </div>
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-red-500/50 transition-all cursor-pointer">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/3/37/Jordan_Logo.svg"
+                        class="h-12 invert opacity-40 group-hover:opacity-100 transition-opacity" alt="Jordan">
+                </div>
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-emerald-500/50 transition-all cursor-pointer">
+                    <span class="font-black text-xl uppercase opacity-40 group-hover:opacity-100 italic">PUMA.</span>
+                </div>
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-blue-500/50 transition-all cursor-pointer">
+                    <span class="font-black text-xl uppercase opacity-40 group-hover:opacity-100 italic">ASICS</span>
+                </div>
+                <div
+                    class="h-24 glass-card flex items-center justify-center p-6 group hover:border-emerald-500/50 transition-all cursor-pointer">
+                    <span
+                        class="font-black text-lg uppercase opacity-40 group-hover:opacity-100 italic">BALENCIAGA</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Curated Brand Collections (Expanded & Hyper-Interactive) -->
+        <section class="max-w-7xl mx-auto px-10 py-12 space-y-20">
+            <!-- NIKE NEURAL SERIES -->
+            <div class="space-y-8">
+                <div class="flex items-end justify-between border-b border-emerald-500/20 pb-4">
+                    <div>
+                        <h4 class="font-heading text-4xl font-black italic tracking-tighter">NIKE // NEURAL</h4>
+                        <p class="text-[9px] font-black text-emerald-400 uppercase tracking-[0.3em]">Diseño optimizado
+                            por Sorenexus</p>
+                    </div>
+                    <span class="text-[10px] font-black opacity-40">COLECCIÓN_04-2026</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Card 1 -->
+                    <div class="neural-card aura-nike p-6 glass-card group">
+                        <div class="hype-token"><span
+                                class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 1.2K Viendo</div>
+                        <img src="https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:rotate-6 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match">MATCH: 98%</span>
+                            <h5 class="text-xs font-black uppercase">Air Max Portal</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$199.00</span>
+                                <span
+                                    class="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 rounded">SALE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="neural-card aura-nike p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:-rotate-6 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match">MATCH: 85%</span>
+                            <h5 class="text-xs font-black uppercase">Dunk Low Aura</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$120.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="neural-card aura-nike p-6 glass-card group">
+                        <div class="hype-token text-red-400">🔥 HOT DROP</div>
+                        <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:rotate-12 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match">MATCH: 92%</span>
+                            <h5 class="text-xs font-black uppercase">Pegasus Neural</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$160.00</span>
+                                <span class="price-old text-[10px]">$210</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="neural-card aura-nike p-6 glass-card group border-emerald-500/10">
+                        <div
+                            class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-110 transition-transform">
+                        <div class="mt-4">
+                            <h5 class="text-xs font-black uppercase italic">Desbloquear variante</h5>
+                            <p class="text-[7px] font-black text-zinc-600 mt-1">Acceso exclusivo Sorenexus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JORDAN LEGACY SERIES -->
+            <div class="space-y-8">
+                <div class="flex items-end justify-between border-b border-red-500/20 pb-4">
+                    <div>
+                        <h4 class="font-heading text-4xl font-black italic tracking-tighter">JORDAN // LEGACY</h4>
+                        <p class="text-[9px] font-black text-red-500 uppercase tracking-[0.3em]">Stock de Herencia Élite
+                        </p>
+                    </div>
+                    <span class="text-[10px] font-black opacity-40">EDICIÓN_LIMITADA_Q4</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Card 1 -->
+                    <div class="neural-card aura-jordan p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-105 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-red-500">MATCH: 100% (PERFECTO)</span>
+                            <h5 class="text-xs font-black uppercase">AJ1 Mid Carbon</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$320.00</span>
+                                <span
+                                    class="text-[8px] font-black text-red-400 border border-red-400/20 px-2 rounded">RARE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="neural-card aura-jordan p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1512374382149-4332c6c021f1?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-105 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-red-500">MATCH: 78%</span>
+                            <h5 class="text-xs font-black uppercase">AJ4 Tech Gray</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$280.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="neural-card aura-jordan p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1597045566774-bf47788ca9ed?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-105 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-red-500">MATCH: 94%</span>
+                            <h5 class="text-xs font-black uppercase">Jumpman Neo</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$145.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="neural-card aura-jordan p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1552066344-24632e2df2a2?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-105 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-red-500">MATCH: 88%</span>
+                            <h5 class="text-xs font-black uppercase">Air Retro Flight</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$195.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADIDAS FLUID SERIES -->
+            <div class="space-y-8">
+                <div class="flex items-end justify-between border-b border-blue-500/20 pb-4">
+                    <div>
+                        <h4 class="font-heading text-4xl font-black italic tracking-tighter">ADIDAS // FLUID</h4>
+                        <p class="text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">Innovación Carbono
+                            Neutro</p>
+                    </div>
+                    <span class="text-[10px] font-black opacity-40">SUSTAIN_RUN_01</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Card 1 -->
+                    <div class="neural-card aura-adidas p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-110 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-blue-400">MATCH: 82%</span>
+                            <h5 class="text-xs font-black uppercase">Gazelle Future</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$110.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="neural-card aura-adidas p-6 glass-card group">
+                        <img src="https://images.unsplash.com/photo-1520639889313-78992bc6942d?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-110 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-blue-400">MATCH: 89%</span>
+                            <h5 class="text-xs font-black uppercase">NMD R1 Cyber</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$160.00</span>
+                                <span
+                                    class="text-[8px] font-black text-blue-400 border border-blue-400/20 px-2 rounded">ECO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="neural-card aura-adidas p-6 glass-card group">
+                        <div class="hype-token text-emerald-400">STOCK BAJO</div>
+                        <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-32 object-contain group-hover:scale-110 transition-transform">
+                        <div class="mt-4 space-y-1">
+                            <span class="neural-match text-blue-400">MATCH: 91%</span>
+                            <h5 class="text-xs font-black uppercase">Forum Low Proto</h5>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-black">$130.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="neural-card aura-adidas p-6 glass-card group bg-blue-500/5 border-blue-500/20">
+                        <div class="flex flex-col items-center justify-center h-48 space-y-4 text-center">
+                            <p class="text-[8px] font-black text-blue-400 uppercase">Reserva Inteligente</p>
+                            <span class="text-xl font-black uppercase">SAMBA<br>NEURAL</span>
+                            <button
+                                class="px-4 py-2 bg-blue-500 text-black text-[9px] font-black rounded-full uppercase">Pre-Orden</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INNOVATION: GLOBAL HYPE INDEX (Neural Energy) -->
+        <div class="fixed left-8 bottom-32 z-[100] group hidden md:block">
+            <div class="glass-card p-4 border-emerald-500/20 flex items-center space-x-4">
+                <div class="space-y-1">
+                    <p class="text-[7px] font-black text-zinc-500 uppercase tracking-widest">Índice Global de Hype</p>
+                    <div class="w-32 h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald-400 w-[72%] animate-pulse shadow-[0_0_10px_#00FFC2]"></div>
+                    </div>
+                </div>
+                <div class="text-xl font-black italic text-emerald-400">72%</div>
+            </div>
+            <div
+                class="absolute -top-10 left-0 bg-emerald-400 text-black text-[8px] font-black px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                PICO DE ENERGÍA: +12% VS ÚLTIMA HORA
+            </div>
+        </div>
+
+        <!-- Why Nexxus (Trust Signals - Compact) -->
+        <section class="py-12 grid grid-cols-1 md:grid-cols-3 gap-10 px-10">
+            <div class="text-center">
+                <div class="text-5xl mb-6">🛡️</div>
+                <h5 class="text-2xl font-black mb-4 uppercase tracking-tighter">Compra Protegida</h5>
+                <p class="text-zinc-500 text-sm">Recibe lo que esperabas o te devolvemos tu dinero de inmediato. Sin
+                    preguntas.</p>
+            </div>
+            <div class="text-center">
+                <div class="text-5xl mb-6">🚀</div>
+                <h5 class="text-2xl font-black mb-4 uppercase tracking-tighter">Envío Warp Speed</h5>
+                <p class="text-zinc-500 text-sm">Logística asistida por IA. Entrega garantizada en menos de 24 horas en
+                    zonas urbanas.</p>
+            </div>
+            <div class="text-center">
+                <div class="text-5xl mb-6">💳</div>
+                <h5 class="text-2xl font-black mb-4 uppercase tracking-tighter">Financiación Neural</h5>
+                <p class="text-zinc-500 text-sm">Paga después con Addi o Sistecredito. Sin intereses para miembros
+                    Prime.</p>
+            </div>
+        </section>
+
+        <!-- FOOTER: Future Hub -->
+        <footer class="max-w-7xl mx-auto px-10 py-32 border-t border-zinc-900 mt-20">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="md:col-span-2">
+                    <h5 class="text-5xl font-black tracking-tighter mb-8 italic uppercase">Únete a la lista<span
+                            class="text-emerald-400">.</span></h5>
+                    <p class="text-zinc-500 mb-8 max-w-sm">Únete a la élite de Nexxus para accesos anticipados y drops
+                        secretos.</p>
+                    <div class="relative max-w-md">
+                        <input type="email" placeholder="TU DIRECCIÓN DIGITAL"
+                            class="w-full bg-zinc-900/50 border border-zinc-800 px-8 py-6 text-xs font-bold tracking-widest outline-none focus:border-emerald-400 transition-all">
+                        <button
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-400 font-bold text-xs tracking-widest">UNIRSE</button>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-8">Navegación</h6>
+                    <ul class="space-y-4 text-sm font-bold opacity-60">
+                        <li><a href="#" class="hover:opacity-100 transition-opacity">Archivo Privado</a></li>
+                        <li><a href="#" class="hover:opacity-100 transition-opacity">Ajustes Neurales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-8">Pagos</h6>
+                    <div class="space-y-6">
+                        <img src="https://addi.com/favicon-32x32.png" class="h-5 filter invert opacity-30" alt="">
+                        <p class="text-[10px] font-medium text-zinc-500 tracking-widest uppercase">Hasta 12 meses sin
+                            interés.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- AI ASSISTANT OVERLAY: SORENEXUS -->
+    <div class="ai-assistant-container">
+        <div class="ai-chat-window">
+            <div class="ai-chat-header">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"
+                            stroke-width="3">
+                            <path d="M12 2v20" />
+                            <path d="M2 12h20" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </div>
+                    <span>SORENEXUS</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                    <button class="opacity-40 hover:opacity-100 transition-all"
+                        onclick="document.querySelector('.ai-chat-window').style.display='none'">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="ai-chat-body">
+                <div class="msg msg-ai">¡Hola! Soy Sorenexus. He bloqueado el precio de los Vortex Quantum para ti
+                    mediante **Neural Price Lock**.</div>
+                <div class="msg msg-user">¿Por qué el precio es menor ahora?</div>
+                <div class="msg msg-ai">Detecté alta compatibilidad con tu talle. Tienes 59 segundos para confirmar
+                    antes de que el stock pase a @User_99 que los tiene en su carrito.</div>
+                <div class="msg msg-user">¡Los quiero ya!</div>
+                <div class="msg msg-ai">Generando orden warp speed... Confirma en el dock.</div>
+            </div>
+            <div class="ai-chat-footer">
+                <input type="text" placeholder="Habla con Sorenexus..." class="ai-input">
+                <div class="ai-send">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="ai-avatar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3">
+                <path d="M12 2v20" />
+                <path d="M2 12h20" />
+                <circle cx="12" cy="12" r="10" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- RESTORED AI DOCK NAVIGATION -->
+    <nav class="ai-dock shadow-2xl">
+        <a href="#" class="flex flex-col items-center text-emerald-400/60 hover:text-emerald-400">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            </svg>
+            <span class="text-[7px] font-black uppercase mt-1 tracking-widest">Inicio</span>
+        </a>
+        <a href="#" class="flex flex-col items-center opacity-40 hover:opacity-100 transition-all">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.54 4.05 3 5.5l7 7Z" />
+            </svg>
+            <span class="text-[7px] font-black uppercase mt-1 tracking-widest">Favoritos</span>
+        </a>
+
+        <div class="ai-core-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3">
+                <path d="M12 2v20" />
+                <path d="M2 12h20" />
+                <circle cx="12" cy="12" r="10" />
+            </svg>
+        </div>
+
+        <a href="#" class="flex flex-col items-center opacity-40 hover:opacity-100 transition-all">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 0 0 0 2-1.61L23 6H6" />
+            </svg>
+            <span class="text-[7px] font-black uppercase mt-1 tracking-widest">Carrito</span>
+        </a>
+        <a href="#" class="flex flex-col items-center opacity-40 hover:opacity-100 transition-all">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span class="text-[7px] font-black uppercase mt-1 tracking-widest">Perfil</span>
+        </a>
+    </nav>
+
+    <div class="h-40"></div>
+</body>
+
+</html>
