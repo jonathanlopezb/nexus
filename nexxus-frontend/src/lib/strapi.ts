@@ -2,13 +2,21 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://nexxus-bac
 const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 export async function fetchStrapi(endpoint: string, options: RequestInit = {}) {
-    const headers: Record<string, string> = {
+    const defaultHeaders = {
         'Content-Type': 'application/json',
-        ...options.headers,
     };
 
+    const headers = new Headers(defaultHeaders);
+
+    if (options.headers) {
+        const customHeaders = new Headers(options.headers);
+        customHeaders.forEach((value, key) => {
+            headers.set(key, value);
+        });
+    }
+
     if (STRAPI_TOKEN) {
-        headers['Authorization'] = `Bearer ${STRAPI_TOKEN}`;
+        headers.set('Authorization', `Bearer ${STRAPI_TOKEN}`);
     }
 
     const res = await fetch(`${STRAPI_URL}/api/${endpoint}`, {
