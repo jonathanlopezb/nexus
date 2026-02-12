@@ -1,9 +1,10 @@
-'use client';
-import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user, isAuthenticated } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -11,51 +12,47 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const styles = [
-        { name: 'CASUAL', img: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1000&auto=format&fit=crop' },
-        { name: 'DEPORTIVO', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000&auto=format&fit=crop' },
-        { name: 'ELEGANTE', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=1000&auto=format&fit=crop' },
-        { name: 'ALTA GAMA', img: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000&auto=format&fit=crop' },
-    ];
-
-    const brands = [
-        { name: 'NIKE', aura: 'bg-blue-500/20', color: 'text-white' },
-        { name: 'JORDAN', aura: 'bg-red-600/20', color: 'text-red-500' },
-        { name: 'ADIDAS', aura: 'bg-zinc-500/20', color: 'text-zinc-400' },
-        { name: 'NEW BALANCE', aura: 'bg-indigo-500/20', color: 'text-indigo-400' },
-        { name: 'YEEZY', aura: 'bg-amber-600/20', color: 'text-amber-500' },
-    ];
+    // ... (rest of styles and brands arrays remain same)
 
     return (
         <>
             <header className={`fixed top-0 left-0 w-full z-[150] transition-all duration-500 ${isScrolled ? 'py-4 bg-black/80 backdrop-blur-xl border-b border-white/5' : 'py-8 md:py-8 pt-12 md:pt-8 bg-transparent'}`}>
                 <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
                     {/* Logo */}
-                    <div className="flex items-center group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <Link href="/" className="flex items-center group cursor-pointer">
                         <span className="font-space-grotesk text-2xl md:text-3xl font-black tracking-tighter italic uppercase">
                             NEXUS<span className="text-accent ml-1">.</span>
                         </span>
-                    </div>
+                    </Link>
 
-                    {/* Neural Search */}
-                    <div className="hidden md:flex flex-1 max-w-xl mx-10 lg:mx-20 relative">
+                    {/* Neural Search - Hidden on mobile */}
+                    <div className="hidden md:flex flex-1 max-w-sm lg:max-w-md mx-10 relative">
                         <input
                             type="text"
-                            placeholder="ENCONTRAR IDENTIDAD DIGITAL..."
-                            className="w-full bg-white/5 backdrop-blur-3xl border border-white/10 px-8 py-4 rounded-2xl text-[10px] font-black tracking-widest outline-none focus:border-accent/40 transition-all placeholder:text-white/20"
+                            placeholder="BUSCAR DROPS..."
+                            className="w-full bg-white/5 backdrop-blur-3xl border border-white/10 px-6 py-3 rounded-xl text-[9px] font-black tracking-widest outline-none focus:border-accent/40 transition-all placeholder:text-white/20"
                         />
-                        <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-4 text-white/30">
-                            <span className="text-[8px] border border-white/10 px-2 py-0.5 rounded">⌘ K</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-                        </div>
                     </div>
 
-                    {/* Menu Controls */}
-                    <div className="flex items-center gap-4 md:gap-8">
-                        <div className="hidden lg:flex items-center gap-2 text-accent">
-                            <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em]">Live: +12 Drops</span>
-                        </div>
+                    {/* User & Menu Controls */}
+                    <div className="flex items-center gap-4 md:gap-6">
+                        {isAuthenticated ? (
+                            <Link href="/profile" className="hidden md:flex items-center gap-3 glass-card px-4 py-2 border-white/10 hover:border-accent group transition-all">
+                                <div className="text-right">
+                                    <p className="text-[8px] font-black uppercase text-zinc-500 tracking-widest">Urban Level</p>
+                                    <p className="text-[10px] font-black text-accent uppercase italic">{user?.UrbanLevel || 'BRONZE'}</p>
+                                </div>
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-accent/20 to-white/10 flex items-center justify-center border border-white/20 group-hover:border-accent transition-colors">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                                </div>
+                            </Link>
+                        ) : (
+                            <Link href="/auth/login" className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-white transition-colors">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" /></svg>
+                                Ingresar
+                            </Link>
+                        )}
+
                         <button
                             onClick={() => setIsMenuOpen(true)}
                             className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all group"

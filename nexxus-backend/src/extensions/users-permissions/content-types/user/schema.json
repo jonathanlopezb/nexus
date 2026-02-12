@@ -1,0 +1,29 @@
+{
+    "attributes": {
+        "PuntosNeurales": {
+            "type": "biginteger",
+            "default": 0
+        },
+        "UrbanLevel": {
+            "type": "enumeration",
+            "enum": [
+                "BRONZE",
+                "SILVER",
+                "GOLD",
+                "NEURAL"
+            ],
+            "default": "BRONZE"
+        },
+        "Favoritos": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::producto.producto"
+        },
+        "resenas": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::resena.resena",
+            "mappedBy": "usuario"
+        }
+    }
+}

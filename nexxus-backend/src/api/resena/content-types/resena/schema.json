@@ -1,0 +1,37 @@
+{
+    "kind": "collectionType",
+    "collectionName": "resenas",
+    "info": {
+        "singularName": "resena",
+        "pluralName": "resenas",
+        "displayName": "Reseña",
+        "description": "Opiniones y calificaciones de los usuarios sobre los productos."
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "Comentario": {
+            "type": "text",
+            "required": true
+        },
+        "Calificacion": {
+            "type": "integer",
+            "min": 1,
+            "max": 5,
+            "required": true
+        },
+        "producto": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::producto.producto",
+            "inversedBy": "resenas"
+        },
+        "usuario": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "resenas"
+        }
+    }
+}

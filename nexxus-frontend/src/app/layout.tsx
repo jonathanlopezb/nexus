@@ -20,16 +20,20 @@ export const metadata: Metadata = {
   },
 };
 
+import { AuthProvider } from "@/context/AuthContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${outfit.variable} ${spaceGrotesk.variable} antialiased noise-overlay`}>
-        <div className="aura"></div>
-        {children}
+    <html lang="es" className="scroll-smooth">
+      <body className={`${spaceGrotesk.variable} ${outfit.variable} antialiased selection:bg-accent selection:text-black`}>
+        <AuthProvider>
+          <div className="aura"></div>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

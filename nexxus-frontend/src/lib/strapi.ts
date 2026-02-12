@@ -5,8 +5,12 @@ export async function fetchStrapi(endpoint: string, options: RequestInit = {}) {
     const headers = new Headers();
     headers.set('Content-Type', 'application/json');
 
-    if (STRAPI_TOKEN) {
-        headers.set('Authorization', `Bearer ${STRAPI_TOKEN}`);
+    // Get token from parameter, env or localStorage
+    const clientToken = typeof window !== 'undefined' ? localStorage.getItem('nexxus_token') : null;
+    const token = STRAPI_TOKEN || clientToken;
+
+    if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
     }
 
     if (options.headers) {

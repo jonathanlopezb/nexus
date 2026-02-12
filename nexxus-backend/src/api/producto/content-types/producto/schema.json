@@ -92,6 +92,12 @@
             "allowedTypes": [
                 "files"
             ]
+        },
+        "resenas": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::resena.resena",
+            "mappedBy": "producto"
         }
     }
 }
