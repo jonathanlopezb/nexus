@@ -1,22 +1,29 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://nexxus-backend-r8m8.onrender.com';
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 export async function fetchStrapi(endpoint: string, options: RequestInit = {}) {
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...options.headers,
+    };
+
+    if (STRAPI_TOKEN) {
+        headers['Authorization'] = `Bearer ${STRAPI_TOKEN}`;
+    }
+
     const res = await fetch(`${STRAPI_URL}/api/${endpoint}`, {
         ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${STRAPI_TOKEN}`,
-            ...options.headers,
-        },
+        headers,
     });
 
     if (!res.ok) {
-        console.error(`Strapi Error: ${res.statusText}`);
+        console.error(`Strapi Error [${endpoint}]: ${res.statusText} (${res.status})`);
         return null;
     }
 
-    return await res.json();
+    const json = await res.json();
+    console.log(`Strapi Data [${endpoint}]:`, json);
+    return json;
 }
 
 export async function getProducts() {

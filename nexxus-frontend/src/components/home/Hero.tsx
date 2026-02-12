@@ -26,6 +26,7 @@ export default function Hero() {
         async function loadData() {
             try {
                 const data = await getHero();
+                console.log("Hero Component Data:", data);
                 if (data) {
                     setHeroData(data);
                 }
