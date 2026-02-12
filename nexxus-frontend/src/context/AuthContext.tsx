@@ -6,9 +6,9 @@ interface User {
     documentId: string;
     username: string;
     email: string;
-    PuntosNeurales: number;
-    UrbanLevel: string;
-    Favoritos?: any[];
+    PuntosNeurales?: number;
+    UrbanLevel?: string;
+    Favoritos?: any[]; // Optional - may not exist in simplified schema
 }
 
 interface AuthContextType {
