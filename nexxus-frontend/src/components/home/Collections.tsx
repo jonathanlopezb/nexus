@@ -16,11 +16,9 @@ interface Product {
     } | null;
     marca: {
         Nombre: string;
-        AuraColor: string | null;
     } | null;
     estilo: {
         Nombre: string;
-        AuraColor: string | null;
     } | null;
 }
 
@@ -54,7 +52,7 @@ export default function Collections() {
             brandMap[brandName] = {
                 title: `${brandName.toUpperCase()} // ${isJordan ? 'LEGACY' : 'NEURAL'}`,
                 sub: isJordan ? "Stock de Herencia Élite" : "Diseño optimizado por Sorenexus",
-                color: product.marca?.AuraColor ? `text-[${product.marca.AuraColor}]` : (isJordan ? 'text-red-500' : 'text-accent'),
+                color: isJordan ? 'text-red-500' : 'text-accent',
                 border: isJordan ? 'border-red-500/20' : 'border-accent/20',
                 aura: isJordan ? 'aura-jordan' : 'aura-nike',
                 products: []
@@ -100,8 +98,6 @@ export default function Collections() {
                                 ? (product.ImagenAura.url.startsWith('http') ? product.ImagenAura.url : `${STRAPI_URL}${product.ImagenAura.url}`)
                                 : "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop";
 
-                            import Link from "next/link";
-                            // ... (dentro de collection.products.map)
                             return (
                                 <Link
                                     key={product.documentId}
