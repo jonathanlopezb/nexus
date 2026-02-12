@@ -51,7 +51,7 @@ export default function Catalog() {
         : products.filter(p => p.Genero === activeFilter);
 
     return (
-        <section className="max-w-7xl mx-auto px-6 md:px-10 py-20 border-t border-white/5">
+        <section id="catalog" className="max-w-7xl mx-auto px-6 md:px-10 py-20 border-t border-white/5">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
                 <div>
                     <p className="text-accent font-black tracking-[0.4em] uppercase text-[10px] mb-3">Recomendaciones Neurales</p>

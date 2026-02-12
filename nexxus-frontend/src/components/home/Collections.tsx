@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { getProducts } from "@/lib/strapi";
+import Link from "next/link";
 
 interface Product {
     id: number;
@@ -99,8 +100,14 @@ export default function Collections() {
                                 ? (product.ImagenAura.url.startsWith('http') ? product.ImagenAura.url : `${STRAPI_URL}${product.ImagenAura.url}`)
                                 : "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop";
 
+                            import Link from "next/link";
+                            // ... (dentro de collection.products.map)
                             return (
-                                <div key={product.id || product.documentId} className={`neural-card ${collection.aura} p-6 glass-card group cursor-pointer`}>
+                                <Link
+                                    key={product.documentId}
+                                    href={`/product/${product.documentId}`}
+                                    className={`neural-card ${collection.aura} p-6 glass-card group cursor-pointer block transition-transform active:scale-95`}
+                                >
                                     <div className="h-40 flex justify-center items-center">
                                         <img src={imageUrl} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={product.Nombre || "Sneaker"} />
                                     </div>
@@ -115,7 +122,7 @@ export default function Collections() {
                                             {product.Rare && <span className="text-[9px] font-black text-red-400 bg-red-400/10 px-2 py-0.5 rounded">RARE</span>}
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             );
                         })}
                         <div className="neural-card p-6 glass-card group border-white/5 flex flex-col items-center justify-center text-center space-y-4 min-h-[250px] opacity-60 hover:opacity-100 transition-opacity">

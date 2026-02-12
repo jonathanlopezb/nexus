@@ -116,8 +116,8 @@ export default function Hero() {
                     </div>
 
                     <div className="flex gap-4 pt-4">
-                        <button className="bg-white text-black px-12 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-accent transition-all hover:scale-105">Comprar Ahora</button>
-                        <button className="bg-white/5 border border-white/10 text-white px-8 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:border-accent transition-all">Ver Detalles</button>
+                        <a href="#catalog" className="bg-white text-black px-12 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-accent transition-all hover:scale-105 flex items-center justify-center">Comprar Ahora</a>
+                        <a href="#catalog" className="bg-white/5 border border-white/10 text-white px-8 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:border-accent transition-all flex items-center justify-center">Ver Detalles</a>
                     </div>
                 </div>
 

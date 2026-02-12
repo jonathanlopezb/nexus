@@ -85,6 +85,13 @@
             "allowedTypes": [
                 "images"
             ]
+        },
+        "Modelo3D": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "files"
+            ]
         }
     }
 }
