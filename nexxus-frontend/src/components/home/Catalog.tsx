@@ -2,6 +2,7 @@
 import ProductSkeleton from "@/components/ui/ProductSkeleton";
 import { useState, useEffect } from "react";
 import { getProducts } from "@/lib/strapi";
+import Link from "next/link";
 
 interface Product {
     id: number;
@@ -64,8 +65,8 @@ export default function Catalog() {
                             key={filter}
                             onClick={() => setActiveFilter(filter)}
                             className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeFilter === filter
-                                    ? 'bg-accent text-black shadow-[0_0_20px_rgba(0,255,194,0.3)]'
-                                    : 'text-zinc-500 hover:text-white'
+                                ? 'bg-accent text-black shadow-[0_0_20px_rgba(0,255,194,0.3)]'
+                                : 'text-zinc-500 hover:text-white'
                                 }`}
                         >
                             {filter}
@@ -92,7 +93,11 @@ export default function Catalog() {
                             : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop";
 
                         return (
-                            <div key={product.documentId} className="glass-card p-6 md:p-8 group cursor-pointer relative overflow-hidden">
+                            <Link
+                                key={product.documentId}
+                                href={`/product/${product.documentId}`}
+                                className="glass-card p-6 md:p-8 group cursor-pointer relative overflow-hidden block transition-transform active:scale-95"
+                            >
                                 {/* Gender Badge Overlay */}
                                 <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 z-10 transition-transform group-hover:scale-110">
                                     <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">
@@ -125,7 +130,7 @@ export default function Catalog() {
                                     </div>
                                     <p className="text-[10px] font-black uppercase text-accent mt-4">Envío Gratis Full</p>
                                 </div>
-                            </div>
+                            </Link>
                         );
                     })
                 )}

@@ -46,3 +46,7 @@ export async function getHero() {
     const data = await fetchStrapi('hero?populate=*');
     return data?.data || null;
 }
+export async function getProduct(documentId: string) {
+    const data = await fetchStrapi(`productos/${documentId}?populate[marca][populate]=*&populate[estilo][populate]=*&populate[ImagenAura][populate]=*`);
+    return data?.data || null;
+}

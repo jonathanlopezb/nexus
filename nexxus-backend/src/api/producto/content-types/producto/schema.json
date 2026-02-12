@@ -78,6 +78,13 @@
             "relation": "manyToOne",
             "target": "api::estilo.estilo",
             "inversedBy": "productos"
+        },
+        "Galeria": {
+            "type": "media",
+            "multiple": true,
+            "allowedTypes": [
+                "images"
+            ]
         }
     }
 }
