@@ -1,3 +1,5 @@
+'use client';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 
@@ -12,7 +14,20 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // ... (rest of styles and brands arrays remain same)
+    const styles = [
+        { name: 'CASUAL', img: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1000&auto=format&fit=crop' },
+        { name: 'DEPORTIVO', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000&auto=format&fit=crop' },
+        { name: 'ELEGANTE', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=1000&auto=format&fit=crop' },
+        { name: 'ALTA GAMA', img: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000&auto=format&fit=crop' },
+    ];
+
+    const brands = [
+        { name: 'NIKE', aura: 'bg-blue-500/20', color: 'text-white' },
+        { name: 'JORDAN', aura: 'bg-red-600/20', color: 'text-red-500' },
+        { name: 'ADIDAS', aura: 'bg-zinc-500/20', color: 'text-zinc-400' },
+        { name: 'NEW BALANCE', aura: 'bg-indigo-500/20', color: 'text-indigo-400' },
+        { name: 'YEEZY', aura: 'bg-amber-600/20', color: 'text-amber-500' },
+    ];
 
     return (
         <>
