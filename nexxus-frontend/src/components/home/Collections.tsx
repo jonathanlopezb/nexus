@@ -108,7 +108,9 @@ export default function Collections() {
                                         <div className={`text-[8px] font-black ${collection.color} tracking-widest`}>MATCH: {product.MatchNeural || 0}%</div>
                                         <h5 className="text-sm font-black uppercase italic tracking-tighter">{product.Nombre || 'Unnamed'}</h5>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-xl font-black">${product.Precio || 0}.00</span>
+                                            <span className="text-xl font-black">
+                                                ${new Intl.NumberFormat('es-CO').format(product.Precio || 0)}
+                                            </span>
                                             {product.Sale && <span className="text-[9px] font-black text-accent bg-accent/10 px-2 py-0.5 rounded">SALE</span>}
                                             {product.Rare && <span className="text-[9px] font-black text-red-400 bg-red-400/10 px-2 py-0.5 rounded">RARE</span>}
                                         </div>

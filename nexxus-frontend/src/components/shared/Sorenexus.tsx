@@ -50,7 +50,7 @@ export default function Sorenexus() {
 
     if (!isOpen) return (
         <div
-            className="fixed bottom-4 right-6 md:right-10 z-[200] ai-avatar scale-90 md:scale-100 flex items-center justify-center bg-white text-black rounded-full w-16 h-16 cursor-pointer shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-110 transition-all border-4 border-black group"
+            className="fixed bottom-[100px] md:bottom-10 right-6 md:right-10 z-[200] ai-avatar scale-90 md:scale-100 flex items-center justify-center bg-white text-black rounded-full w-16 h-16 cursor-pointer shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-110 transition-all border-4 border-black group"
             onClick={() => setIsOpen(true)}
         >
             <div className="absolute inset-0 rounded-full animate-ping bg-accent/20"></div>
@@ -62,7 +62,7 @@ export default function Sorenexus() {
     );
 
     return (
-        <div className="fixed bottom-4 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
+        <div className="fixed bottom-[100px] md:bottom-10 right-6 md:right-10 z-[200] flex flex-col items-end gap-5">
             <div className="w-[320px] bg-zinc-900/95 backdrop-blur-3xl border border-accent rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,255,194,0.2)]">
                 <div className="bg-gradient-to-r from-accent to-blue-500 p-5 flex justify-between items-center text-black font-black text-sm">
                     <div className="flex items-center gap-2 italic">

@@ -98,9 +98,13 @@ export default function Hero() {
                         <div className="space-y-2">
                             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">Neural Price Lock</p>
                             <div className="flex items-baseline gap-3 md:gap-4">
-                                <span className="text-5xl md:text-6xl font-black italic">${displayData.Price}.00</span>
+                                <span className="text-5xl md:text-6xl font-black italic">
+                                    ${new Intl.NumberFormat('es-CO').format(displayData.Price)}
+                                </span>
                                 {displayData.OriginalPrice && (
-                                    <span className="text-lg md:text-xl line-through opacity-20">${displayData.OriginalPrice}.00</span>
+                                    <span className="text-lg md:text-xl line-through opacity-20">
+                                        ${new Intl.NumberFormat('es-CO').format(displayData.OriginalPrice)}
+                                    </span>
                                 )}
                             </div>
                         </div>
