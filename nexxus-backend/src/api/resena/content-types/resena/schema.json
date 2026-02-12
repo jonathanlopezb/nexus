@@ -26,12 +26,6 @@
             "relation": "manyToOne",
             "target": "api::producto.producto",
             "inversedBy": "resenas"
-        },
-        "usuario": {
-            "type": "relation",
-            "relation": "manyToOne",
-            "target": "plugin::users-permissions.user",
-            "inversedBy": "resenas"
         }
     }
 }
