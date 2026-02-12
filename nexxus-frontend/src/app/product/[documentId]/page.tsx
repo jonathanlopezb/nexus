@@ -5,6 +5,9 @@ import Footer from "@/components/layout/Footer";
 import MobileDock from "@/components/layout/MobileDock";
 import ProductViewer from "@/components/product/ProductViewer";
 import MarketingTriggers from "@/components/product/MarketingTriggers";
+import FavoriteButton from "@/components/product/FavoriteButton";
+import ReviewForm from "@/components/product/ReviewForm";
+import ReviewList from "@/components/product/ReviewList";
 
 interface PageProps {
     params: Promise<{
@@ -113,12 +116,33 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
 
                     <div className="pt-8 space-y-4">
-                        <button className="w-full bg-white text-black h-16 rounded-2xl font-black uppercase italic tracking-widest text-sm hover:bg-accent transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] active:scale-95">
-                            Adquirir Drop
-                        </button>
+                        <div className="flex gap-4">
+                            <button className="flex-1 bg-white text-black h-16 rounded-2xl font-black uppercase italic tracking-widest text-sm hover:bg-accent transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] active:scale-95">
+                                Adquirir Drop
+                            </button>
+                            <FavoriteButton productId={product.documentId} />
+                        </div>
                         <p className="text-center text-[9px] font-black uppercase tracking-widest text-zinc-600">
                             Fricción cero. Pago seguro vía Addi.
                         </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Reviews Section */}
+            <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 border-t border-white/5">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-8">
+                            Opiniones <span className="text-accent">Neurales</span>
+                        </h2>
+                        <ReviewList productId={product.documentId} />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-8">
+                            Tu <span className="text-accent">Feedback</span>
+                        </h2>
+                        <ReviewForm productId={product.documentId} />
                     </div>
                 </div>
             </div>
