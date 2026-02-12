@@ -7,13 +7,14 @@ import ProductViewer from "@/components/product/ProductViewer";
 import MarketingTriggers from "@/components/product/MarketingTriggers";
 
 interface PageProps {
-    params: {
+    params: Promise<{
         documentId: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const product = await getProduct(params.documentId);
+    const { documentId } = await params;
+    const product = await getProduct(documentId);
     if (!product) return { title: "Producto no encontrado | NEXXUS" };
 
     return {
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductPage({ params }: PageProps) {
-    const product = await getProduct(params.documentId);
+    const { documentId } = await params;
+    const product = await getProduct(documentId);
 
     if (!product) {
         return (
