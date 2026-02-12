@@ -11,20 +11,5 @@
     "options": {
         "draftAndPublish": false
     },
-    "attributes": {
-        "PuntosNeurales": {
-            "type": "biginteger",
-            "default": 0
-        },
-        "UrbanLevel": {
-            "type": "enumeration",
-            "enum": [
-                "BRONZE",
-                "SILVER",
-                "GOLD",
-                "NEURAL"
-            ],
-            "default": "BRONZE"
-        }
-    }
+    "attributes": {}
 }
